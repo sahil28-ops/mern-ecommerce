@@ -51,6 +51,37 @@ const CreateCategory = () => {
     }
   };
 
+  const handleDeleteCategory = async (categoryId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3001/category/${categoryId}`
+      );
+
+      if (response.data.message) {
+        console.log(response.data.message);
+        setCount(count + 1);
+      } else {
+        console.log(response.data.message);
+      }
+    } catch (error) {
+      console.error("Failed to delete category:", error);
+    }
+  };
+  // const handleUpdateCategory = async (categoryId) => {
+  //   try {
+  //     const response = await axios.put(
+  //       `http://localhost:3001/category/${categoryId}`
+  //     );
+  //     if (response.data.message) {
+  //       console.log(response.data.message);
+  //       setCount(count + 1);
+  //     } else {
+  //       console.log(response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to Delete category:".error);
+  //   }
+  // };
   return (
     <>
       <div>
@@ -82,7 +113,7 @@ const CreateCategory = () => {
         </thead>
         <tbody>
           {categories.map((curEle, index) => (
-            <tr key={curEle.id || index}>
+            <tr key={curEle._id || index}>
               <td>{index + 1}</td>
               <td>{curEle.name}</td>
               <td>
@@ -90,7 +121,8 @@ const CreateCategory = () => {
                   variant="danger"
                   size="sm"
                   onClick={() => {
-                    console.log("Delete action for:", curEle.id);
+                    handleDeleteCategory(curEle._id);
+                    // console.log("Delete action for:", curEle.id);
                   }}
                   className="me-2"
                 >
@@ -100,7 +132,7 @@ const CreateCategory = () => {
                   variant="primary"
                   size="sm"
                   onClick={() => {
-                    console.log("Edit action for:", curEle.id);
+                    handleUpdateCategory(curEle._id);
                   }}
                 >
                   Edit
