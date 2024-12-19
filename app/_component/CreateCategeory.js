@@ -7,7 +7,6 @@ const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
   const [count, setCount] = useState(0);
 
-  // Fetch categories on component mount
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -23,15 +22,10 @@ const CreateCategory = () => {
     };
 
     fetchCategories();
-  }, [count]); // Re-fetch categories when count changes
+  }, [count]);
 
-  // Handle adding a new category
   const handleCategoryData = async (e) => {
     e.preventDefault();
-    if (!category.trim()) {
-      console.log("Category name is required");
-      return;
-    }
 
     try {
       const response = await axios.post(`http://localhost:3001/category`, {
@@ -40,12 +34,12 @@ const CreateCategory = () => {
 
       if (response.data.success) {
         console.log(response.data.message);
-        setCount(count + 1); // Trigger a re-fetch of categories
+        setCount(count + 1);
       } else {
         console.log(response.data.message);
       }
 
-      setCategory(""); // Clear input field
+      setCategory("");
     } catch (error) {
       console.error("Failed to add category:", error);
     }
